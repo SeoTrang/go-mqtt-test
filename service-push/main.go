@@ -6,15 +6,28 @@ import (
 	"os"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("❌ Không thể load file .env:", err)
+		os.Exit(1)
+	}
+
+	brokerIP := os.Getenv("BROKER_IP")
+	brokerPort := os.Getenv("BROKER_PORT")
+	brokerUsername := os.Getenv("BROKER_USERNAME")
+	brokerPassword := os.Getenv("BROKER_PASSWORD")
+
 	// Cấu hình MQTT client
 	opts := mqtt.NewClientOptions().
-		AddBroker("tcp://103.56.158.48:1883").
-		SetClientID("go_simple_client").
-		SetUsername("test").
-		SetPassword("test")
+		AddBroker(fmt.Sprintf("tcp://%s:%s", brokerIP, brokerPort)).
+		SetClientID("go_mqtt_client_push").
+		SetUsername(brokerUsername).
+		SetPassword(brokerPassword)
 
 	client := mqtt.NewClient(opts)
 

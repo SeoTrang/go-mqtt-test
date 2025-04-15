@@ -6,9 +6,20 @@ import (
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("❌ Không thể load file .env:", err)
+		os.Exit(1)
+	}
+	brokerIP := os.Getenv("BROKER_IP")
+	brokerPort := os.Getenv("BROKER_PORT")
+	brokerUsername := os.Getenv("BROKER_USERNAME")
+	brokerPassword := os.Getenv("BROKER_PASSWORD")
 	// Định nghĩa hàm callback khi nhận tin nhắn
 	messageHandler := func(client mqtt.Client, msg mqtt.Message) {
 		fmt.Printf("📥 Received on [%s]: %s\n", msg.Topic(), msg.Payload())
@@ -16,10 +27,10 @@ func main() {
 
 	// Cấu hình MQTT client
 	opts := mqtt.NewClientOptions().
-		AddBroker("tcp://103.56.158.48:1883").
+		AddBroker(fmt.Sprintf("tcp://%s:%s", brokerIP, brokerPort)).
 		SetClientID("go_mqtt_client").
-		SetUsername("test").
-		SetPassword("test").
+		SetUsername(brokerUsername).
+		SetPassword(brokerPassword).
 		SetDefaultPublishHandler(messageHandler)
 
 	// Tạo client
