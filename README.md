@@ -1,8 +1,3 @@
-Dưới đây là một mẫu **README.md** cho hai project MQTT của bạn, giải thích chi tiết từng phần, bao gồm các câu hỏi bạn đã thắc mắc và cách giải quyết chúng.
-
----
-
-## README.md
 
 # MQTT Client and Server in Go
 
