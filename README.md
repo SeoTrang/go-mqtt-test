@@ -75,7 +75,7 @@ import (
 func main() {
     // Cấu hình MQTT client
     opts := mqtt.NewClientOptions().
-        AddBroker("tcp://103.56.158.48:1883").
+        AddBroker("tcp://{mqtt-ip}:1883").
         SetClientID("go_simple_client").
         SetUsername("test").
         SetPassword("test")
@@ -154,7 +154,7 @@ func main() {
 
     // Cấu hình MQTT client
     opts := mqtt.NewClientOptions().
-        AddBroker("tcp://103.56.158.48:1883").
+        AddBroker("tcp://{mqtt-ip}:1883").
         SetClientID("go_mqtt_client").
         SetUsername("test").
         SetPassword("test").
@@ -203,11 +203,11 @@ Cảm ơn bạn đã chỉ ra sai sót. Dưới đây là phiên bản chính x�
 ## Câu hỏi thường gặp
 
 ### 1. **Tại sao không cần chỉ định port trong URL của MQTT client trong Node.js nhưng lại cần trong Go?**
-   - **Node.js**: Khi sử dụng thư viện `mqtt` cho Node.js, nếu không chỉ định port, thư viện này sẽ tự động sử dụng port mặc định `1883` cho giao thức MQTT không mã hóa (TCP). Vì vậy, khi bạn sử dụng `mqtt://103.56.158.48`, Node.js sẽ mặc định kết nối tới `103.56.158.48:1883`.
-   - **Go**: Trong Go, thư viện `paho.mqtt.golang` yêu cầu bạn phải chỉ định rõ ràng **port** khi kết nối đến broker MQTT. Do đó, bạn phải chỉ định cổng rõ ràng, ví dụ `tcp://103.56.158.48:1883`. Go không tự động giả định port mặc định như Node.js.
+   - **Node.js**: Khi sử dụng thư viện `mqtt` cho Node.js, nếu không chỉ định port, thư viện này sẽ tự động sử dụng port mặc định `1883` cho giao thức MQTT không mã hóa (TCP). Vì vậy, khi bạn sử dụng `mqtt://{mqtt-ip}`, Node.js sẽ mặc định kết nối tới `{mqtt-ip}:1883`.
+   - **Go**: Trong Go, thư viện `paho.mqtt.golang` yêu cầu bạn phải chỉ định rõ ràng **port** khi kết nối đến broker MQTT. Do đó, bạn phải chỉ định cổng rõ ràng, ví dụ `tcp://{mqtt-ip}:1883`. Go không tự động giả định port mặc định như Node.js.
 
 ### 2. **Tại sao trong Node.js dùng `mqtt://`, còn trong Go dùng `tcp://`?**
    - **Node.js**: Thư viện MQTT của Node.js mặc định sử dụng giao thức **TCP** cho kết nối không mã hóa khi bạn sử dụng `mqtt://`. Bạn không cần chỉ định rõ giao thức TCP vì thư viện đã hiểu mặc định là sử dụng giao thức TCP.
-   - **Go**: Trong Go, bạn cần chỉ định rõ giao thức khi kết nối đến broker, ví dụ: `tcp://` cho kết nối không mã hóa hoặc `tls://` cho kết nối mã hóa (SSL/TLS). Vì vậy, khi bạn sử dụng `tcp://103.56.158.48:1883`, bạn đang nói rõ rằng bạn muốn sử dụng giao thức **TCP**.
+   - **Go**: Trong Go, bạn cần chỉ định rõ giao thức khi kết nối đến broker, ví dụ: `tcp://` cho kết nối không mã hóa hoặc `tls://` cho kết nối mã hóa (SSL/TLS). Vì vậy, khi bạn sử dụng `tcp://{mqtt-ip}:1883`, bạn đang nói rõ rằng bạn muốn sử dụng giao thức **TCP**.
 
 ---
